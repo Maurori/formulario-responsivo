@@ -1,0 +1,73 @@
+body { 
+    font-family: Arial, sans-serif; 
+    padding: 20px; 
+    max-width: 600px; 
+    margin: auto; 
+}
+
+.question { 
+    margin-bottom: 20px; 
+}
+
+.option { 
+    display: block; 
+    margin: 5px 0; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    cursor: pointer; 
+}
+
+.option:hover { 
+    background-color: #f0f0f0; 
+}
+
+.selected { 
+    background-color: #cce5ff; 
+    border-color: #3399ff; 
+}
+
+.disabled { 
+    pointer-events: none; 
+    opacity: 0.6; 
+}
+
+#nextBtn { 
+    margin-top: 20px; 
+    display: none; 
+}
+
+#status { 
+    margin-top: 20px; 
+    font-weight: bold; 
+    color: green; 
+}
+
+#formArea {
+    background-color: #eef6ff; /* fundo trocar depois*/
+    border: 2px dashed #ccc;
+    padding: 20px;
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+/* inputs dentro do formArea */
+#userName, #userSerie {
+    padding: 10px; 
+    width: 100%; 
+    margin-bottom: 10px;
+}
+
+/* estilo da bagaca do timer */
+#timerMessage {
+    margin-top: 15px;
+    font-weight: bold;
+    color: red;
+    display: none; /* nonenonenonenenenen */
+    text-align: center;
+}
+
+/* perfumaria chata pra pra comecar */
+button[onclick="iniciarQuiz()"] {
+    padding: 10px;
+    /*mais perfumaria? */
+}
