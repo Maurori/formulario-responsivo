@@ -1,3 +1,6 @@
+
+
+ 
 // usa o Chrome e sem chance pra phone, mas o brave passa ....
 //  
 function verificaDispositivo() {
@@ -15,15 +18,15 @@ function verificaDispositivo() {
 
   if (!isChrome) {
     document.body.innerHTML = "<h2>Use o Google Chrome!.</h2>";
-    window.location.href = "https://ctrlplay.com.br/";
+    window.location.href = "nao.html";
     return false;
   }
 
   // Novo bloqueio para celular ou tela pequena
   if (isMobile || isSmallScreen) {
-    document.body.innerHTML = "<h2>Este formulário deve ser acessado de um computador.</h2>";
-    // Você pode redirecionar para uma página específica para celular ou para a página inicial
-    window.location.href = "https://ctrlplay.com.br/"; // Ou uma URL de sua escolha
+    document.body.innerHTML = "<h2> só pc, notebook!!!!!.</h2>";
+    // Você pode redirecionar "https://ctrlplay.com.br/"
+    window.location.href = "nao.html"; // Ou uma URL de sua escolha
     return false;
   }
 
@@ -59,8 +62,8 @@ let userSerie = "";
 let leaveTimer = null; 
 // Var  do timer
 let countdownInterval = null; 
-const REDIRECT_URL = "https://ctrlplay.com.br/"; // manda pras crianças
-const REDIRECT_TIMEOUT = 10;  
+const REDIRECT_URL = "nao.html"; // manda pras crianças
+const REDIRECT_TIMEOUT = 5;  
 
 document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("keydown", function (e) {
@@ -179,7 +182,7 @@ nextBtn.onclick = () => {
   }
 };
 
-//  10 .9 8 7 6 5 4 3 2 1......redireciona
+//  . 5 4 3 2 1......redireciona
 function startCountdown() {
     let timeLeft = REDIRECT_TIMEOUT;
     timerMessageDiv.textContent = `Mouse dentro do form! Redirecionamento em ${timeLeft} segundos.`;
@@ -208,7 +211,7 @@ function handleMouseLeave() {
   if (leaveTimer) clearTimeout(leaveTimer);
   if (countdownInterval) clearInterval(countdownInterval);  
 
-  // mostra 10 .9......
+  // mostra 10 .9...... era 10 virou 5
   startCountdown();
   
   //  10 s  redirect
@@ -241,6 +244,7 @@ function enviarFormulario() {
 
   const templateParams = {
     to_email: "maurori@prof.educacao.sp.gov.br",
+    //cc_email: 'luizasilva03@prof.educacao.sp.gov.br',
     nome_usuario: userName,
     serie_usuario: userSerie,
     respostas: respostas.map((r, i) => `Q${i + 1}: ${r}`).join("\n")
@@ -248,11 +252,11 @@ function enviarFormulario() {
 
   emailjs.send("service_goman9p", "template_3k5hl9e", templateParams)
     .then(() => {
-      statusDiv.textContent = " Prova enviada! agora vai dormir!...";
+      statusDiv.textContent = " Prova enviada! obrigado!...";
       statusDiv.style.color = "green"; // mete um verde
-      // manda os caretas dormir depois do form
+      // manda os caretas dormir depois do form https://www.sleepup.com.br era..
       setTimeout(() => { 
-        window.location.href = "https://www.sleepup.com.br/"; 
+        window.location.href = "sim.html"; 
       }, 2000); //  
     })
     .catch(() => {     //////exceto........
@@ -260,7 +264,8 @@ function enviarFormulario() {
       statusDiv.style.color = "red";
       //  
       setTimeout(() => { 
-        window.location.href = "https://www.sleepup.com.br/"; 
+        window.location.href = "sim.html"; 
       }, 2000); //  
     });
 }
+ 
