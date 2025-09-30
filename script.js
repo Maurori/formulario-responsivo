@@ -1,8 +1,5 @@
-
-
- 
 // usa o Chrome e sem chance pra phone, mas o brave passa ....
-//  
+//
 function verificaDispositivo() {
   const ua = navigator.userAgent;
   const isChrome = ua.includes("Chrome") && !ua.includes("Edg") && !ua.includes("OPR");
@@ -34,18 +31,48 @@ function verificaDispositivo() {
 }
 
 //esta bagaca do EmailJS (publicKey )
-emailjs.init("2USzg7NVPSVWbunmn"); 
+emailjs.init("2USzg7NVPSVWbunmn");
 
-const questions = [
-  { text: "Qual é a capital do Brasil?", options: ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador", "Curitiba"] },
-  { text: "Qual é o maior planeta do sistema solar?", options: ["Terra", "Marte", "Júpiter", "Saturno", "Vênus"] },
-  { text: "Quem escreveu 'Dom Casmurro'?", options: ["Machado de Assis", "Carlos Drummond", "Clarice Lispector", "Graciliano Ramos", "Jorge Amado"] },
-  { text: "Qual é o elemento químico representado por 'O'?", options: ["Ouro", "Oxigênio", "Prata", "Carbono", "Hidrogênio"] },
-  { text: "Qual é a cidade da barriga de bola?", options: ["Jacareí", "Taubaté", "Ubatuba", "Cabreúva", "Jundiaí"] },
-  { text: "Quantos continentes existem?", options: ["4", "5", "6", "7", "8"] }
+// --- PERGUNTAS DE CONHECIMENTOS GERAIS ---
+const generalQuestions = [
+  { text: "Qual é a capital do Brasil?", options: ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador", "Curitiba"], category: "Geral" },
+  { text: "Qual é o maior planeta do sistema solar?", options: ["Terra", "Marte", "Júpiter", "Saturno", "Vênus"], category: "Geral" },
+  { text: "Quem escreveu 'Dom Casmurro'?", options: ["Machado de Assis", "Carlos Drummond", "Clarice Lispector", "Graciliano Ramos", "Jorge Amado"], category: "Geral" },
+  { text: "Qual é o elemento químico representado por 'O'?", options: ["Ouro", "Oxigênio", "Prata", "Carbono", "Hidrogênio"], category: "Geral" },
+  { text: "Qual é a cidade da barriga de bola?", options: ["Jacareí", "Taubaté", "Ubatuba", "Cabreúva", "Jundiaí"], category: "Geral" },
+  { text: "Quantos continentes existem?", options: ["4", "5", "6", "7", "8"], category: "Geral" }
 ];
-const originalQuestions = [...questions]; // monha cópia ordem original pra me achar
-const shuffledQuestions = [...questions].sort(() => Math.random() - 0.5); // mistura tudo
+
+// --- NOVAS PERGUNTAS DE MATEMÁTICA ---
+const mathQuestions = [
+  { text: "Quanto é 7 x 8?", options: ["49", "56", "64", "72", "81"], category: "Matemática" },
+  { text: "Qual o resultado de 15 + 23?", options: ["35", "38", "40", "43", "36"], category: "Matemática" },
+  { text: "Se x = 5, quanto é 2x + 3?", options: ["10", "12", "13", "15", "18"], category: "Matemática" },
+  { text: "Qual a raiz quadrada de 81?", options: ["7", "8", "9", "10", "6"], category: "Matemática" },
+  { text: "Quanto é 120 dividido por 3?", options: ["30", "35", "40", "45", "50"], category: "Matemática" }
+];
+
+// --- NOVAS PERGUNTAS DE GEOGRAFIA ---
+const geoQuestions = [
+  { text: "Qual é o rio mais longo do mundo?", options: ["Amazonas", "Nilo", "Yangtzé", "Mississippi", "Paraná"], category: "Geografia" },
+  { text: "Qual o continente mais populoso?", options: ["África", "América", "Europa", "Ásia", "Oceania"], category: "Geografia" },
+  { text: "Qual o deserto mais extenso do mundo?", options: ["Saara", "Atacama", "Gobi", "Kalahari", "Arábia"], category: "Geografia" },
+  { text: "Qual a capital da França?", options: ["Berlim", "Roma", "Madri", "Paris", "Londres"], category: "Geografia" },
+  { text: "Qual oceano banha a costa leste do Brasil?", options: ["Pacífico", "Índico", "Atlântico", "Antártico", "Ártico"], category: "Geografia" }
+];
+
+// Combinar todas as perguntas na ordem desejada para o quiz (Geral, Matemática, Geografia)
+const allQuestions = [...generalQuestions, ...mathQuestions, ...geoQuestions];
+
+const originalQuestions = [...allQuestions]; // Cópia da ordem original para referência no e-mail
+
+// Misturar as perguntas DENTRO de cada categoria e depois concatená-las
+const shuffledGeneral = [...generalQuestions].sort(() => Math.random() - 0.5);
+const shuffledMath = [...mathQuestions].sort(() => Math.random() - 0.5);
+const shuffledGeo = [...geoQuestions].sort(() => Math.random() - 0.5);
+
+const shuffledQuestions = [...shuffledGeneral, ...shuffledMath, ...shuffledGeo]; // Agora as categorias estão em ordem, e as perguntas dentro delas, embaralhadas.
+
 
 let currentQuestion = 0;
 const respostas = [];
@@ -58,12 +85,12 @@ const timerMessageDiv = document.getElementById("timerMessage"); // novo timer
 let userName = "";
 let userSerie = "";
 
-// Var do ID timer inicial 
-let leaveTimer = null; 
+// Var do ID timer inicial
+let leaveTimer = null;
 // Var  do timer
-let countdownInterval = null; 
+let countdownInterval = null;
 const REDIRECT_URL = "nao.html"; // manda pras crianças
-const REDIRECT_TIMEOUT = 5;  
+const REDIRECT_TIMEOUT = 5;
 
 document.addEventListener("contextmenu", e => e.preventDefault());
 document.addEventListener("keydown", function (e) {
@@ -97,8 +124,8 @@ function iniciarQuiz() {
         text: "Por favor, digite um nome com pelo menos 7 caracteres.",
         duration: 3000,
         close: true,
-        gravity: "top",  
-        position: "right",  
+        gravity: "top",
+        position: "right",
         backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
     }).showToast();
     return;
@@ -108,8 +135,8 @@ function iniciarQuiz() {
         text: "Por favor, digite uma série com pelo menos 2 caracteres.",
         duration: 3000,
         close: true,
-        gravity: "top",  
-        position: "right",  
+        gravity: "top",
+        position: "right",
         backgroundColor: "linear-gradient(to right, #ff416c, #ff4b2b)",
     }).showToast();
     return;
@@ -124,7 +151,7 @@ function iniciarQuiz() {
   nextBtn.style.display = "block"; // força o botão
   loadQuestion(currentQuestion);
 
-  // listeners no inicio do quiz 
+  // listeners no inicio do quiz
   formArea.addEventListener("mouseleave", handleMouseLeave);
   formArea.addEventListener("mouseenter", handleMouseEnter);
 }
@@ -136,7 +163,7 @@ function loadQuestion(index) {
   const q = shuffledQuestions[index];
   const questionDiv = document.createElement("div");
   questionDiv.className = "question";
-  questionDiv.innerHTML = `<strong>${q.text}</strong>`;
+  questionDiv.innerHTML = `<strong>(${q.category}) ${q.text}</strong>`; // Mostra a categoria da pergunta
 
   // zoa a ordem das perguntas
   const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
@@ -153,8 +180,14 @@ function loadQuestion(index) {
       });
       optDiv.classList.add("selected");
 
-      const originalIndex = originalQuestions.findIndex(p => p.text === q.text);
-      respostas[originalIndex] = opt; 
+      // Encontra o índice da pergunta no array original para salvar a resposta corretamente
+      // Isso é crucial para que as respostas sejam salvas na ordem correta, independente do embaralhamento de exibição
+      const originalIndex = originalQuestions.findIndex(p => p.text === q.text && p.category === q.category);
+      if (originalIndex !== -1) {
+        respostas[originalIndex] = opt;
+      } else {
+        console.warn("Pergunta não encontrada no array original:", q.text);
+      }
 
       nextBtn.style.display = "inline-block";
     };
@@ -166,7 +199,7 @@ function loadQuestion(index) {
 
 nextBtn.onclick = () => {
   currentQuestion++;
-  if (currentQuestion < questions.length) {
+  if (currentQuestion < shuffledQuestions.length) { // Usa shuffledQuestions.length
     loadQuestion(currentQuestion);
   } else {
     quizContainer.innerHTML = "<h3>Formulário concluído. Enviando...</h3>";
@@ -185,12 +218,12 @@ nextBtn.onclick = () => {
 //  . 5 4 3 2 1......redireciona
 function startCountdown() {
     let timeLeft = REDIRECT_TIMEOUT;
-    timerMessageDiv.textContent = `Mouse dentro do form! Redirecionamento em ${timeLeft} segundos.`;
+    timerMessageDiv.textContent = `Mouse fora do form! Redirecionamento em ${timeLeft} segundos.`;
     timerMessageDiv.style.display = "block"; //mostra
 
     countdownInterval = setInterval(() => {
         timeLeft--;
-        timerMessageDiv.textContent = `Mouse dentro do form! Redirecionamento em ${timeLeft} segundos.`;
+        timerMessageDiv.textContent = `Mouse fora do form! Redirecionamento em ${timeLeft} segundos.`;
         if (timeLeft <= 0) {
             clearInterval(countdownInterval);
             window.location.href = REDIRECT_URL; // perdeu playboy
@@ -200,25 +233,25 @@ function startCountdown() {
 
 // timer
 function stopCountdown() {
-    clearInterval(countdownInterval); // 
+    clearInterval(countdownInterval); //
     countdownInterval = null; // Zera a variável
-    timerMessageDiv.style.display = "none"; // 
+    timerMessageDiv.style.display = "none"; //
 }
 
 // quando sai o mouse
 function handleMouseLeave() {
-   
+
   if (leaveTimer) clearTimeout(leaveTimer);
-  if (countdownInterval) clearInterval(countdownInterval);  
+  if (countdownInterval) clearInterval(countdownInterval);
 
   // mostra 10 .9...... era 10 virou 5
   startCountdown();
-  
+
   //  10 s  redirect
   leaveTimer = setTimeout(() => {
-    
+
     window.location.href = REDIRECT_URL;
-  }, REDIRECT_TIMEOUT * 1000); 
+  }, REDIRECT_TIMEOUT * 1000);
 }
 
 // quando o mouse entra
@@ -226,7 +259,7 @@ function handleMouseEnter() {
   // controle do timer
   if (leaveTimer) {
     clearTimeout(leaveTimer);
-    leaveTimer = null;  
+    leaveTimer = null;
   }
   // para se entrar...
   if (countdownInterval) {
@@ -247,7 +280,11 @@ function enviarFormulario() {
     //cc_email: 'luizasilva03@prof.educacao.sp.gov.br',
     nome_usuario: userName,
     serie_usuario: userSerie,
-    respostas: respostas.map((r, i) => `Q${i + 1}: ${r}`).join("\n")
+    // Mapeia as respostas usando as perguntas originais para incluir a categoria no e-mail
+    respostas: originalQuestions.map((q, i) => {
+        const respostaUsuario = respostas[i] || 'Não respondida';
+        return `(${q.category}) ${q.text} -> Resposta: ${respostaUsuario}`;
+    }).join("\n")
   };
 
   emailjs.send("service_goman9p", "template_3k5hl9e", templateParams)
@@ -255,17 +292,16 @@ function enviarFormulario() {
       statusDiv.textContent = " Prova enviada! obrigado!...";
       statusDiv.style.color = "green"; // mete um verde
       // manda os caretas dormir depois do form https://www.sleepup.com.br era..
-      setTimeout(() => { 
-        window.location.href = "sim.html"; 
-      }, 2000); //  
+      setTimeout(() => {
+        window.location.href = "sim.html";
+      }, 2000); //
     })
     .catch(() => {     //////exceto........
       statusDiv.textContent = " Erro . Redireciona";
       statusDiv.style.color = "red";
-      //  
-      setTimeout(() => { 
-        window.location.href = "sim.html"; 
-      }, 2000); //  
+      //
+      setTimeout(() => {
+        window.location.href = "sim.html";
+      }, 2000); //
     });
 }
- 
