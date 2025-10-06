@@ -1,33 +1,32 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>Prova Global</title>
-  <!-- Servidor de email tem que criar uma conta exemplo https://youtu.be/ziYrGFADE1g?si=7Nk9Wo0k5C4ffyaX-->
-  <!-- mete no git de gratis https://youtu.be/q3vsAtijvgA?si=0fa7RRwY8eQJijUR-->
-  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-  
-  <!-- pega a perfumaria -->
-  <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>developer</title>
+    <link rel="stylesheet" href="style.css">
 </head>
-<body onload="verificaDispositivo();">
-  
-  <div id="formArea">
-    <h2>Digite seu nome e série :</h2>
-    <input type="text" id="userName" placeholder="Seu nome" maxlength="50" minlength="10" required autocomplete="off">
-    <input type="text" id="userSerie" placeholder="Sua série" maxlength="10" minlength="2" required autocomplete="off">
+<body>
     
-    <button onclick="iniciarQuiz()">Iniciar</button>
-    <div id="quizContainer" style="display:none;"></div>
-    <button id="nextBtn" style="display: none;">Próxima Pergunta</button>
-    <div id="status"></div>
-    <!-- minha mensagem do timer pra ficar esperto -->
-    <div id="timerMessage"></div> 
-  </div>
-         <!--    mano esta m.... abaixo bota dentro do html, perdi meia hora nesta m...-->
-  <script src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <!-- pega o js -->
-  <script src="script.js"></script>
+    <div class="container">
+        <h1>Qualitynf</h1>
+        <form id="loginForm" autocomplete="off">
+            <div class="input-group">
+                <label for="email">Email</label>
+                <!-- update too -->
+                <input type="email" id="email" name="email" autocomplete="off" required>
+            </div>
+            <div class="input-group">
+                <label for="password">Senha</label>
+                <!-- update later -->
+                <input type="password" id="password" name="password" autocomplete="new-password" required>
+            </div>
+            <button type="submit">Entrar</button>
+            <div id="message" style="color: red; margin-top: 10px;"></div>
+            <p id="message" class="error"></p>
+        </form>
+    </div>
+
+    <script type="module" src="script.js"></script>
 </body>
 </html>

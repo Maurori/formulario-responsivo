@@ -1,73 +1,109 @@
-body { 
-    font-family: Arial, sans-serif; 
-    padding: 20px; 
-    max-width: 600px; 
-    margin: auto; 
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #222; 
+    color: #eee;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    /*  */
+    background-image: url('https://source.unsplash.com/1600x900/?coding,data,server,backend,developer');
+    /* */
 }
 
-.question { 
-    margin-bottom: 20px; 
-}
-
-.option { 
-    display: block; 
-    margin: 5px 0; 
-    padding: 10px; 
-    border: 1px solid #ccc; 
-    cursor: pointer; 
-}
-
-.option:hover { 
-    background-color: #f0f0f0; 
-}
-
-.selected { 
-    background-color: #cce5ff; 
-    border-color: #3399ff; 
-}
-
-.disabled { 
-    pointer-events: none; 
-    opacity: 0.6; 
-}
-
-#nextBtn { 
-    margin-top: 20px; 
-    display: none; 
-}
-
-#status { 
-    margin-top: 20px; 
-    font-weight: bold; 
-    color: green; 
-}
-
-#formArea {
-    background-color: #eef6ff; /* fundo trocar depois*/
-    border: 2px dashed #ccc;
-    padding: 20px;
+.container {
+    background-color: rgba(0, 0, 0, 0.75); 
+    padding: 40px;
     border-radius: 10px;
-    transition: background-color 0.3s ease;
-}
-
-/* inputs dentro do formArea */
-#userName, #userSerie {
-    padding: 10px; 
-    width: 100%; 
-    margin-bottom: 10px;
-}
-
-/* estilo da bagaca do timer */
-#timerMessage {
-    margin-top: 15px;
-    font-weight: bold;
-    color: red;
-    display: none; /* nonenonenonenenenen */
+    box-shadow: 0 0 20px rgba(0, 255, 255, 0.4); 
     text-align: center;
+    max-width: 400px;
+    width: 90%;
 }
 
-/* perfumaria chata pra pra comecar */
-button[onclick="iniciarQuiz()"] {
-    padding: 10px;
-    /*mais perfumaria? */
+h1 {
+    color: #00ffff; 
+    margin-bottom: 30px;
+    font-size: 1.8em;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    text-align: left;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+    color: #bbb;
+    font-size: 1.1em;
+}
+
+input[type="email"], /* Adicionei input[type="email"] */
+input[type="password"] {
+    width: calc(100% - 20px);
+    padding: 12px;
+    border: 1px solid #00ffff;
+    border-radius: 5px;
+    background-color: #333;
+    color: #fff;
+    font-size: 1em;
+    outline: none;
+    box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
+}
+
+input[type="email"]:focus, /* Adicionei input[type="email"]:focus */
+input[type="password"]:focus {
+    border-color: #00e6e6;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
+}
+
+button {
+    background-color: #00ffff;
+    color: #000;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+button:hover {
+    background-color: #00e6e6;
+    box-shadow: 0 0 15px rgba(0, 255, 255, 0.8);
+}
+
+.error {
+    color: #ff4d4d; 
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.success {
+    color: #4CAF50; 
+    margin-top: 20px;
+    font-weight: bold;
+}
+.error {
+    color: red;
+    font-weight: bold;
+    
+    /* background-image: url('caminho/para/icone-erro.png'); */
+    /* background-repeat: no-repeat; */
+    /* padding-left: 25px; */
+}
+
+.success {
+    color: green;
+    font-weight: bold;
+    /* background-image: url('caminho/para/icone-sucesso.png'); */
+    /* background-repeat: no-repeat; */
+    /* padding-left: 25px; */
 }
