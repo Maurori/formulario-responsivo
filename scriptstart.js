@@ -15,7 +15,7 @@ function verificaDispositivo() {
 
   if (!isChrome) {
     document.body.innerHTML = "<h2>Use o Google Chrome!.</h2>";
-    window.location.href = "nao.html";
+    window.location.replace("nao.html"); // Alterado para replace()
     return false;
   }
 
@@ -23,7 +23,7 @@ function verificaDispositivo() {
   if (isMobile || isSmallScreen) {
     document.body.innerHTML = "<h2> só pc, notebook!!!!!.</h2>";
     // Você pode redirecionar "https://ctrlplay.com.br/"
-    window.location.href = "nao.html"; // Ou uma URL de sua escolha
+    window.location.replace("nao.html"); // Alterado para replace()
     return false;
   }
 
@@ -226,7 +226,7 @@ function startCountdown() {
         timerMessageDiv.textContent = `Mouse fora do form! Redirecionamento em ${timeLeft} segundos.`;
         if (timeLeft <= 0) {
             clearInterval(countdownInterval);
-            window.location.href = REDIRECT_URL; // perdeu playboy
+            window.location.replace(REDIRECT_URL); // ALTERAÇÃO AQUI: usa replace()
         }
     }, 1000); // 10 s
 }
@@ -250,7 +250,7 @@ function handleMouseLeave() {
   //  10 s  redirect
   leaveTimer = setTimeout(() => {
 
-    window.location.href = REDIRECT_URL;
+    window.location.replace(REDIRECT_URL); // ALTERAÇÃO AQUI: usa replace()
   }, REDIRECT_TIMEOUT * 1000);
 }
 
@@ -293,7 +293,7 @@ function enviarFormulario() {
       statusDiv.style.color = "green"; // mete um verde
       // manda os caretas dormir depois do form https://www.sleepup.com.br era..
       setTimeout(() => {
-        window.location.href = "sim.html";
+        window.location.replace("sim.html"); // ALTERAÇÃO AQUI: usa replace()
       }, 2000); //
     })
     .catch(() => {     //////exceto........
@@ -301,7 +301,7 @@ function enviarFormulario() {
       statusDiv.style.color = "red";
       //
       setTimeout(() => {
-        window.location.href = "sim.html";
+        window.location.replace("sim.html"); // ALTERAÇÃO AQUI: usa replace()
       }, 2000); //
     });
 }
