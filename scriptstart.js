@@ -33,7 +33,7 @@ function verificaDispositivo() {
 //esta bagaca do EmailJS (publicKey )
 emailjs.init("2USzg7NVPSVWbunmn");
 
-// --- PERGUNTAS DE CONHECIMENTOS GERAIS ---
+// --- disciplina 1 geral ---
 const generalQuestions = [
   { text: "Qual é a capital do Brasil?", options: ["São Paulo", "Rio de Janeiro", "Brasília", "Salvador", "Curitiba"], category: "Geral" },
   { text: "Qual é o maior planeta do sistema solar?", options: ["Terra", "Marte", "Júpiter", "Saturno", "Vênus"], category: "Geral" },
@@ -43,7 +43,7 @@ const generalQuestions = [
   { text: "Quantos continentes existem?", options: ["4", "5", "6", "7", "8"], category: "Geral" }
 ];
 
-// --- NOVAS PERGUNTAS DE MATEMÁTICA ---
+// --- Math ---
 const mathQuestions = [
   { text: "Quanto é 7 x 8?", options: ["49", "56", "64", "72", "81"], category: "Matemática" },
   { text: "Qual o resultado de 15 + 23?", options: ["35", "38", "40", "43", "36"], category: "Matemática" },
@@ -52,7 +52,7 @@ const mathQuestions = [
   { text: "Quanto é 120 dividido por 3?", options: ["30", "35", "40", "45", "50"], category: "Matemática" }
 ];
 
-// --- NOVAS PERGUNTAS DE GEOGRAFIA ---
+// --- Geo ---
 const geoQuestions = [
   { text: "Qual é o rio mais longo do mundo?", options: ["Amazonas", "Nilo", "Yangtzé", "Mississippi", "Paraná"], category: "Geografia" },
   { text: "Qual o continente mais populoso?", options: ["África", "América", "Europa", "Ásia", "Oceania"], category: "Geografia" },
@@ -61,17 +61,17 @@ const geoQuestions = [
   { text: "Qual oceano banha a costa leste do Brasil?", options: ["Pacífico", "Índico", "Atlântico", "Antártico", "Ártico"], category: "Geografia" }
 ];
 
-// Combinar todas as perguntas na ordem desejada para o quiz (Geral, Matemática, Geografia)
+// Combinar as perguntas  
 const allQuestions = [...generalQuestions, ...mathQuestions, ...geoQuestions];
 
-const originalQuestions = [...allQuestions]; // Cópia da ordem original para referência no e-mail
+const originalQuestions = [...allQuestions]; // ordem original
 
-// Misturar as perguntas DENTRO de cada categoria e depois concatená-las
+// mistura dentro da categ
 const shuffledGeneral = [...generalQuestions].sort(() => Math.random() - 0.5);
 const shuffledMath = [...mathQuestions].sort(() => Math.random() - 0.5);
 const shuffledGeo = [...geoQuestions].sort(() => Math.random() - 0.5);
 
-const shuffledQuestions = [...shuffledGeneral, ...shuffledMath, ...shuffledGeo]; // Agora as categorias estão em ordem, e as perguntas dentro delas, embaralhadas.
+const shuffledQuestions = [...shuffledGeneral, ...shuffledMath, ...shuffledGeo]; 
 
 
 let currentQuestion = 0;
@@ -79,17 +79,17 @@ const respostas = [];
 const quizContainer = document.getElementById("quizContainer");
 const nextBtn = document.getElementById("nextBtn");
 const statusDiv = document.getElementById("status");
-const formArea = document.getElementById("formArea"); // pega a divisao  form
+const formArea = document.getElementById("formArea"); // pegadiv  form
 const timerMessageDiv = document.getElementById("timerMessage"); // novo timer
 
 let userName = "";
 let userSerie = "";
 
-// Var do ID timer inicial
+// var id
 let leaveTimer = null;
-// Var  do timer
+
 let countdownInterval = null;
-const REDIRECT_URL = "nao.html"; // manda pras crianças
+const REDIRECT_URL = "nao.html"; // pros manes
 const REDIRECT_TIMEOUT = 5;
 
 document.addEventListener("contextmenu", e => e.preventDefault());
@@ -98,7 +98,7 @@ document.addEventListener("keydown", function (e) {
   if (e.key === "F12" || e.keyCode === 123) {
     e.preventDefault();
   }
-  // Ctrl Shift I sem inspecionar o elemento
+  // Ctrl Shift I 
   if (e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
     e.preventDefault();
   }
@@ -180,8 +180,6 @@ function loadQuestion(index) {
       });
       optDiv.classList.add("selected");
 
-      // Encontra o índice da pergunta no array original para salvar a resposta corretamente
-      // Isso é crucial para que as respostas sejam salvas na ordem correta, independente do embaralhamento de exibição
       const originalIndex = originalQuestions.findIndex(p => p.text === q.text && p.category === q.category);
       if (originalIndex !== -1) {
         respostas[originalIndex] = opt;
@@ -199,7 +197,7 @@ function loadQuestion(index) {
 
 nextBtn.onclick = () => {
   currentQuestion++;
-  if (currentQuestion < shuffledQuestions.length) { // Usa shuffledQuestions.length
+  if (currentQuestion < shuffledQuestions.length) { 
     loadQuestion(currentQuestion);
   } else {
     quizContainer.innerHTML = "<h3>Formulário concluído. Enviando...</h3>";
@@ -250,7 +248,7 @@ function handleMouseLeave() {
   //  10 s  redirect
   leaveTimer = setTimeout(() => {
 
-    window.location.replace(REDIRECT_URL); // ALTERAÇÃO AQUI: usa replace()
+    window.location.replace(REDIRECT_URL); // usa replace()
   }, REDIRECT_TIMEOUT * 1000);
 }
 
@@ -261,7 +259,7 @@ function handleMouseEnter() {
     clearTimeout(leaveTimer);
     leaveTimer = null;
   }
-  // para se entrar...
+  // para se entrar.......
   if (countdownInterval) {
     stopCountdown();
   }
@@ -280,7 +278,7 @@ function enviarFormulario() {
     //cc_email: 'luizasilva03@prof.educacao.sp.gov.br',
     nome_usuario: userName,
     serie_usuario: userSerie,
-    // Mapeia as respostas usando as perguntas originais para incluir a categoria no e-mail
+    // Mapeia as respostas 
     respostas: originalQuestions.map((q, i) => {
         const respostaUsuario = respostas[i] || 'Não respondida';
         return `(${q.category}) ${q.text} -> Resposta: ${respostaUsuario}`;

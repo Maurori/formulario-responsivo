@@ -45,14 +45,14 @@ body {
 }
 
 #formArea {
-    background-color: #eef6ff; /* fundo trocar depois*/
+    background-color: #eef6ff; 
     border: 2px dashed #ccc;
     padding: 20px;
     border-radius: 10px;
     transition: background-color 0.3s ease;
 }
 
-/* inputs dentro do formArea */
+
 #userName, #userSerie {
     padding: 10px; 
     width: 100%; 

@@ -43,7 +43,7 @@ label {
     font-size: 1.1em;
 }
 
-input[type="email"], /* Adicionei input[type="email"] */
+input[type="email"], 
 input[type="password"] {
     width: calc(100% - 20px);
     padding: 12px;
@@ -56,7 +56,7 @@ input[type="password"] {
     box-shadow: 0 0 8px rgba(0, 255, 255, 0.3);
 }
 
-input[type="email"]:focus, /* Adicionei input[type="email"]:focus */
+input[type="email"]:focus, 
 input[type="password"]:focus {
     border-color: #00e6e6;
     box-shadow: 0 0 12px rgba(0, 255, 255, 0.6);
@@ -95,7 +95,7 @@ button:hover {
     color: red;
     font-weight: bold;
     
-    /* background-image: url('caminho/para/icone-erro.png'); */
+    /* background-image: url('caminho/para/icone-err.png'); */
     /* background-repeat: no-repeat; */
     /* padding-left: 25px; */
 }
@@ -103,7 +103,7 @@ button:hover {
 .success {
     color: green;
     font-weight: bold;
-    /* background-image: url('caminho/para/icone-sucesso.png'); */
+    /* background-image: url('sucesso.png'); */
     /* background-repeat: no-repeat; */
     /* padding-left: 25px; */
 }
