@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Global Selection</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+            margin: 0;
+            user-select: none; /* nananinanao */
+            -webkit-user-select: none; /* Safari */
+            -moz-user-select: none; /*  Firefox */
+            -ms-user-select: none; /* IE/Edge */
+        }
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 90%;
+            max-width: 400px;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .options button {
+            background-color: #007bff;
+            color: white;
+            padding: 12px 20px;
+            margin: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .options button:hover {
+            background-color: #0056b3;
+        }
+        .password-section {
+            margin-top: 20px;
+            display: none; /* hide start */
+        }
+        .password-section label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        .password-section input[type="password"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        .password-section button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        .password-section button:hover {
+            background-color: #218838;
+        }
+        .error-message {
+            color: red;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body oncontextmenu="return false;"> <!-- direito -->
+    <div class="container">
+        <h1>Escolha uma Opção Global</h1>
+        <div class="options">
+            <button onclick="selectOption('2DS')">Global 2DS</button>
+            <button onclick="selectOption('3DS')">Global 3DS</button>
+        </div>
+
+        <div id="passwordSection" class="password-section">
+            <label for="passwordInput">Digite a senha:</label>
+            <input type="password" id="passwordInput" placeholder="Senha">
+            <button onclick="checkPassword()">Acessar</button>
+            <p id="errorMessage" class="error-message">Senha incorreta. Tente novamente.</p>
+        </div>
+    </div>
+
+    <script>
+        let selectedSeries = ''; // 2 ou 3 ds
+
+        function selectOption(series) {
+            selectedSeries = series;
+            document.getElementById('passwordSection').style.display = 'block';
+            document.getElementById('passwordInput').value = ''; // clear pass
+            document.getElementById('errorMessage').style.display = 'none'; // hide error
+        }
+
+        function checkPassword() {
+            const passwordInput = document.getElementById('passwordInput').value;
+            const errorMessage = document.getElementById('errorMessage');
+
+            const date = new Date();
+            const day = date.getDate(); // dd
+            const month = date.getMonth() + 1; // mm
+            const yearTwoDigits = date.getFullYear() % 100; // aa
+
+            let numericalSum = 0; // sum
+            let expectedPassword = ''; // string +
+            let correctRedirectPage = '';
+
+            // calendar +++++++
+            if (selectedSeries === '2DS') {
+                numericalSum = 2 + day + month + yearTwoDigits;
+                expectedPassword = 'global2ds' + numericalSum; // join
+                correctRedirectPage = 'start2ds.html';
+            } else if (selectedSeries === '3DS') {
+                numericalSum = 3 + day + month + yearTwoDigits;
+                expectedPassword = 'global3ds' + numericalSum; // join plus
+                correctRedirectPage = 'startterceirods.html';
+            }
+
+            if (passwordInput === expectedPassword) {
+                window.location.href = correctRedirectPage;
+            } else {
+                errorMessage.style.display = 'block';
+            }
+        }
+
+        // --- Bloqueios---
+
+        // right
+        document.addEventListener('contextmenu', function(e) {
+            e.preventDefault();
+        });
+
+        
+        document.addEventListener('keydown', function(e) {
+            
+            if (e.key === 'F12') {
+                e.preventDefault();
+            }
+            
+            if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+                e.preventDefault();
+            }
+            
+            if (e.ctrlKey && e.key === 'U') {
+                e.preventDefault();
+            }
+            
+            if (e.key === 'F5' || (e.ctrlKey && e.key === 'R')) {
+                 e.preventDefault();
+            }
+            
+            if (e.ctrlKey && e.key === 'S') {
+                e.preventDefault();
+            }
+        });
+
+        
+    </script>
+</body>
+</html>
