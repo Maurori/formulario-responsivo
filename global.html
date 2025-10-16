@@ -93,7 +93,7 @@
 
         <div id="passwordSection" class="password-section">
             <label for="passwordInput">Digite a senha:</label>
-            <input type="password" id="passwordInput" placeholder="Senha">
+            <input type="password" id="passwordInput" placeholder="Senha" autocomplete="new-password">
             <button onclick="checkPassword()">Acessar</button>
             <p id="errorMessage" class="error-message">Senha incorreta. Tente novamente.</p>
         </div>
@@ -147,31 +147,31 @@
             e.preventDefault();
         });
 
-        
+
         document.addEventListener('keydown', function(e) {
-            
+
             if (e.key === 'F12') {
                 e.preventDefault();
             }
-            
+
             if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
                 e.preventDefault();
             }
-            
+
             if (e.ctrlKey && e.key === 'U') {
                 e.preventDefault();
             }
-            
+
             if (e.key === 'F5' || (e.ctrlKey && e.key === 'R')) {
                  e.preventDefault();
             }
-            
+
             if (e.ctrlKey && e.key === 'S') {
                 e.preventDefault();
             }
         });
 
-        
+
     </script>
 </body>
 </html>
