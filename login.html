@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validação com QR Code</title>
+    <style>
+        body { font-family: Arial, sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; background-color: #f4f4f4; margin: 0; }
+        .container { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 0 15px rgba(0,0,0,0.1); text-align: center; max-width: 400px; width: 90%; }
+        h2 { color: #333; margin-bottom: 25px; }
+        #qrcode-container { margin: 30px 0; padding: 15px; border: 1px solid #eee; border-radius: 5px; background-color: #f9f9f9; display: inline-block; }
+        input[type="text"] { width: calc(100% - 20px); padding: 12px; margin: 15px 0 20px; border: 1px solid #ddd; border-radius: 5px; font-size: 1.1em; text-align: center; letter-spacing: 2px; }
+        button { background-color: #28a745; color: white; padding: 12px 25px; border: none; border-radius: 5px; cursor: pointer; font-size: 1em; transition: background-color 0.3s ease; }
+        button:hover { background-color: #218838; }
+        #message { color: red; margin-top: 15px; font-weight: bold; }
+        .success-message { color: green; }
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background-color: #e0e0e0;
+            margin: auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            border-radius: 5px;
+            font-size: 0.9em;
+        }
+    </style>
+    <!-- Lib-->
+    <script src="https://cdn.rawgit.com/davidshimjs/qrcodejs/gh-pages/qrcode.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Acesso Seguro por QR Code</h2>
+        <p>Scaneie o QR Code abaixo  para obter  acesso.</p>
+        
+        <div id="qrcode-container">
+            <!-- tocreate-->
+            <div id="qrcode" class="qr-placeholder">Gerando QR Code...</div>
+        </div>
+        
+        <p>Digite a senha de seis números:</p>
+        <input type="text" id="userInput" maxlength="6" placeholder="******" autofocus>
+        <button id="validateButton">Validar Acesso</button>
+        <p id="message"></p>
+    </div>
+
+    <script>
+        let generatedCode = ''; // passvar
+
+        function generateRandomCode(length) {
+            let result = '';
+            const characters = '0123456789';
+            const charactersLength = characters.length;
+            for (let i = 0; i < length; i++) {
+                result += characters.charAt(Math.floor(Math.random() * charactersLength));
+            }
+            return result;
+        }
+
+        function generateQRCode() {
+            // clear
+            document.getElementById('qrcode').innerHTML = '';
+
+            generatedCode = generateRandomCode(6); // show
+            
+            new QRCode(document.getElementById("qrcode"), {
+                text: generatedCode,
+                width: 200,
+                height: 200,
+                colorDark : "#000000",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+            
+            document.getElementById('message').textContent = ''; // clear message
+            document.getElementById('userInput').value = ''; // clear input
+        }
+
+        document.getElementById('validateButton').addEventListener('click', function() {
+            const userInput = document.getElementById('userInput').value;
+            const messageElement = document.getElementById('message');
+
+            if (userInput === generatedCode) {
+                messageElement.textContent = 'ok! um momento.....';
+                messageElement.className = 'success-message';
+                
+                 Ex: window.location.href = 'global.html';
+             
+                setTimeout(() => {
+                   // alert('Simulando redirecionamento para a próxima página.');
+                    generateQRCode(); // Gera um novo QR code para um novo teste
+                }, 1500);
+            } else {
+                messageElement.textContent = 'incorreto. Tente novamente.';
+                messageElement.className = '';
+            }
+        });
+
+        // to create when onload
+        window.onload = generateQRCode;
+    </script>
+</body>
+</html>
