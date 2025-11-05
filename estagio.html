@@ -41,9 +41,14 @@
             color: #555;
         }
 
-        #timer-container {
-            text-align: center;
+        #timer-controls {
+            display: flex; /* start timer*/
+            justify-content: center;
+            align-items: center;
             margin-bottom: 25px;
+        }
+
+        #timer-container {
             font-size: 1.4em;
             color: #e74c3c;
             font-weight: bold;
@@ -51,6 +56,29 @@
             background-color: #ffebee;
             border-radius: 8px;
             border: 1px solid #ef9a9a;
+            margin-right: 10px; /* space button timer */
+            min-width: 180px; /* keep weight */
+            text-align: center;
+        }
+
+        #start-button {
+            padding: 10px 20px;
+            background-color: #28a745; /* keep green */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1em;
+            transition: background-color 0.3s ease;
+        }
+
+        #start-button:hover:not(:disabled) {
+            background-color: #218838;
+        }
+
+        #start-button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
         }
 
         .question {
@@ -150,6 +178,19 @@
             color: #333;
         }
 
+        /* hide form */
+        .hidden-quiz {
+            display: none;
+            opacity: 0; /* soft */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        /* show form */
+        .visible-quiz {
+            display: block;
+            opacity: 1;
+        }
+
         @media (max-width: 600px) {
             .quiz-container {
                 padding: 20px;
@@ -163,6 +204,13 @@
             #timer-container {
                 font-size: 1.2em;
             }
+            #timer-controls {
+                flex-direction: column; /*control form */
+            }
+            #timer-container {
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
         }
     </style>
 </head>
@@ -171,10 +219,13 @@
         <h1>Estágio em Desenvolvimento de Sistemas</h1>
         <p class="description">Teste seus conhecimentos básicos para uma vaga de estágio!</p>
 
-        <div id="timer-container">Tempo restante: <span id="time">03:00</span></div>
+        <div id="timer-controls">
+            <div id="timer-container">Tempo restante: <span id="time">03:00</span></div>
+            <button id="start-button">Iniciar Teste</button>
+        </div>
 
-        <form id="quizForm">
-            <!--JavaScript -->
+        <form id="quizForm" class="hidden-quiz">
+            <!--index -->
         </form>
 
         <div id="result-container">
@@ -301,11 +352,13 @@
         let answeredQuestionsCount = 0;
         const totalQuestions = allQuestions.length;
         let timerInterval;
-        let timeLeft = 3 * 60; 
+        let timeLeft = 3 * 60; // 3 minutos
         const quizForm = document.getElementById('quizForm');
         const timeDisplay = document.getElementById('time');
         const finalScoreSpan = document.getElementById('finalScore');
         const totalQuestionsCountSpan = document.getElementById('totalQuestionsCount');
+        const startButton = document.getElementById('start-button');
+        let quizStarted = false; //new var
 
         // shuffler
         function shuffleArray(array) {
@@ -317,7 +370,7 @@
 
         // render
         function renderQuestions() {
-            shuffleArray(allQuestions); 
+            shuffleArray(allQuestions);
             quizForm.innerHTML = ''; // clear form
 
             allQuestions.forEach((q, index) => {
@@ -326,13 +379,13 @@
                 questionDiv.id = `q${q.id}`;
 
                 const questionTitle = document.createElement('h2');
-                questionTitle.textContent = `${index + 1}. ${q.question.substring(q.question.indexOf('.') + 1).trim()}`; // Remove o número da pergunta original para o novo índice
+                questionTitle.textContent = `${index + 1}. ${q.question.substring(q.question.indexOf('.') + 1).trim()}`; //del num quest orig
 
                 const optionsDiv = document.createElement('div');
                 optionsDiv.className = 'options';
 
                 const optionKeys = Object.keys(q.options);
-                shuffleArray(optionKeys); 
+                shuffleArray(optionKeys);
 
                 optionKeys.forEach(key => {
                     const label = document.createElement('label');
@@ -384,7 +437,7 @@
             const feedbackElement = document.getElementById(`feedback${questionId}`);
             const checkButton = questionElement.querySelector('button');
 
-            // desable button
+            // desable button and radio options
             const radioButtons = questionElement.querySelectorAll('input[type="radio"]');
             radioButtons.forEach(radio => radio.disabled = true);
             questionElement.querySelectorAll('label').forEach(label => label.classList.add('disabled-label'));
@@ -418,7 +471,7 @@
         }
 
         function endQuiz() {
-            
+            // desable button
             const allRadioButtons = quizForm.querySelectorAll('input[type="radio"]');
             allRadioButtons.forEach(radio => radio.disabled = true);
             quizForm.querySelectorAll('label').forEach(label => label.classList.add('disabled-label'));
@@ -426,19 +479,34 @@
             const allButtons = quizForm.querySelectorAll('button');
             allButtons.forEach(button => button.disabled = true);
 
-            
+            // show result
             finalScoreSpan.textContent = score;
             totalQuestionsCountSpan.textContent = totalQuestions;
             document.getElementById('result-container').style.display = 'block';
             document.getElementById('result-container').scrollIntoView({ behavior: 'smooth', block: 'end' });
-            document.getElementById('timer-container').style.color = '#27ae60'; 
+            document.getElementById('timer-container').style.color = '#27ae60';
             document.getElementById('timer-container').innerHTML = "Tempo esgotado!";
+
+            // hide quest again
+            quizForm.classList.remove('visible-quiz');
+            quizForm.classList.add('hidden-quiz');
         }
 
-        // onload
+        // start o quiz
+        function initializeQuiz() {
+            if (!quizStarted) {
+                quizStarted = true;
+                startButton.disabled = true; //  
+                quizForm.classList.remove('hidden-quiz'); //  
+                quizForm.classList.add('visible-quiz');
+                renderQuestions(); //  
+                startTimer(); //  
+            }
+        }
+
+        // onload 
         document.addEventListener('DOMContentLoaded', () => {
-            renderQuestions();
-            startTimer();
+            startButton.addEventListener('click', initializeQuiz);
         });
     </script>
 </body>
