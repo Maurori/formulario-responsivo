@@ -1,0 +1,100 @@
+body {
+    font-family: Arial, sans-serif;
+    padding: 20px;
+    max-width: 800px; 
+    margin: auto;
+}
+
+.question {
+    margin-bottom: 20px;
+}
+
+.option {
+    display: block;
+    margin: 5px 0;
+    padding: 10px;
+    border: 1px solid #ccc;
+    cursor: pointer;
+}
+
+.option:hover {
+    background-color: #f0f0f0;
+}
+
+.selected {
+    background-color: #cce5ff;
+    border-color: #3399ff;
+}
+
+.disabled {
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+#nextBtn {
+    margin-top: 20px;
+    display: none;
+}
+
+#status {
+    margin-top: 20px;
+    font-weight: bold;
+    color: green;
+}
+
+#formArea {
+    background-color: #eef6ff;
+    border: 2px dashed #ccc;
+    padding: 40px; 
+    min-height: 300px; 
+    border-radius: 10px;
+    transition: background-color 0.3s ease;
+}
+
+#userName, #userSerie {
+    padding: 10px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+
+/* estilo da bagaca do timer */
+#timerMessage {
+    margin-top: 15px;
+    font-weight: bold;
+    color: red;
+    display: none; /* nonenonenonenenenen */
+    text-align: center;
+}
+
+/* perfumaria chata pra pra comecar */
+button[onclick="iniciarQuiz()"] {
+    padding: 10px;
+    /*mais perfumaria? */
+}
+
+/* Estilo para a área de texto */
+#userText {
+    width: 100%; /* largura total disponível */
+    height: 250px; /* Aumentei para mais espaço de digitação */
+    padding: 15px;
+    margin-bottom: 15px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical; 
+}
+
+#submitTextBtn {
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+}
+
+#submitTextBtn:hover {
+    background-color: #0056b3;
+}
